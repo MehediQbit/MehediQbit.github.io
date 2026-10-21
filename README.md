@@ -43,8 +43,8 @@ A modern, responsive, and beautifully designed portfolio website built with vani
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/MehediDevJourney/MehediDevJourney.github.io.git
-cd MehediDevJourney.github.io
+git clone https://github.com/MehediQbit/MehediQbit.github.io.git
+cd MehediQbit.github.io
 ```
 
 ### View the Website
@@ -151,7 +151,7 @@ Feel free to fork this project and customize it for your own use!
 
 ## 📞 Connect
 
-- **GitHub**: [@MehediDevJourney](https://github.com/MehediDevJourney)
+- **GitHub**: [@MehediQbit](https://github.com/MehediQbit)
 - **Email**: mehedi@example.com
 - **Location**: Bangladesh
 

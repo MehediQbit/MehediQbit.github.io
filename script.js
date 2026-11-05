@@ -79,6 +79,20 @@
       typeTimer=setTimeout(tick,32);
     })();
   }
+  var revealObserver=null;
+  function setupReveal(){
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if(!("IntersectionObserver" in window)) return;
+    if(!revealObserver){
+      revealObserver=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); revealObserver.unobserve(en.target); } });
+      },{threshold:0.12,rootMargin:"0px 0px -6% 0px"});
+    }
+    document.querySelectorAll(".sec,.panel,.skill,.project,.social,.step-body,.contact").forEach(function(el){
+      if(el.classList.contains("in")||el.dataset.revealBound) return;
+      el.dataset.revealBound="1"; el.classList.add("reveal"); revealObserver.observe(el);
+    });
+  }
   function applyLang(next,save){
     lang=(next==="bn"?"bn":"en");
     document.documentElement.lang=(lang==="bn"?"bn":"en");
@@ -88,7 +102,7 @@
     document.getElementById("btn-bn").setAttribute("aria-pressed",lang==="bn");
     document.getElementById("btn-en").setAttribute("aria-pressed",lang==="en");
     if(save){ try{localStorage.setItem("mq-lang",lang);}catch(e){} }
-    renderStatic(); renderSkills(); renderRoad(); renderProjects(); renderSocials(); startTypewriter();
+    renderStatic(); renderSkills(); renderRoad(); renderProjects(); renderSocials(); startTypewriter(); setupReveal();
     var cl=document.getElementById("copyLabel"); if(cl) cl.textContent=dict().copy;
   }
   document.querySelectorAll("[data-setlang]").forEach(function(b){
@@ -106,6 +120,12 @@
       card.style.transform="rotateY("+((window.innerWidth/2-e.pageX)/110)+"deg) rotateX("+((window.innerHeight/2-e.pageY)/110)+"deg)";
     });
     document.addEventListener("mouseleave",function(){card.style.transform="";});
+  }
+  // Compact header on scroll
+  var topbar=document.querySelector(".topbar");
+  if(topbar){
+    var onScroll=function(){ topbar.classList.toggle("scrolled",window.scrollY>40); };
+    window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
   }
   // Copy email
   var btn=document.getElementById("copyBtn");
